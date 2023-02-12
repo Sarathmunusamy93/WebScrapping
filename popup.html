@@ -3,7 +3,7 @@ Use of this source code is governed by a BSD-style license that can be
 found in the LICENSE file. -->
 <html>
   <head>
-    <title>Water Popup</title>
+    <title>Do Scrap</title>
     <style>
       /* CSS */
       .theader {
@@ -30,6 +30,7 @@ found in the LICENSE file. -->
 
     <script src="./jquery-1.10.2.js"></script>
     <link rel="stylesheet" href="./external/bootstrap.min.css" />
+    <link rel="stylesheet" href="./style.css" />
     <script src="./external/bootstrap.min.js"></script>
     <!--
       - JavaScript and HTML must be in separate files: see our Content Security
@@ -40,16 +41,18 @@ found in the LICENSE file. -->
   </head>
   <body>
     <div class="container">
-      <div class="apptitle">App Title</div>
+      <div class="apptitle">Do Scrap</div>
       <div class="userUtilitiesArea">
-        <div class="tableTitle">Table Title</div>
+        <div class="tableTitle" id="tblTitle"></div>
         <div class="downloadOptions">
-          <button class="btn downloadbtn" id="dwnJson">Download JSON</button>
-          <button class="btn downloadbtn" id="dwnexcel">Download Excel</button>
-          <button class="btn downloadbtn" id="dwnPDF">Download PDF</button>
+          <button class="btn btn-primary downloadbtn" id="dwnJson">Download JSON</button>
+          <button class="btn btn-primary  downloadbtn" id="dwnexcel">Download Excel</button>
+          <button class="btn btn-primary  downloadbtn" id="dwnPDF">Download PDF</button>
         </div>
       </div>
-      <table id="table" class="table table-striped"></table>
+      <table id="table" class="table table-striped">
+      
+      </table>
     </div>
 
     <!-- HTML !-->

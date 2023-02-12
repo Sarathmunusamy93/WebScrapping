@@ -28,12 +28,22 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
   if (request == "getAllAmazonItems") {
     var allItemsContainer = "",
-      shopingItemsList = [];
+      shopingItemsList = {
+        siteDetails: {
+          siteName: "",
+          searchText: "",
+        },
+        results: [],
+      };
 
     if (window.location.origin.includes("amazon")) {
       allItemsContainer = $("div[data-component-type='s-search-result']");
+      shopingItemsList.siteDetails.siteName = "Amazon";
+      shopingItemsList.siteDetails.searchText = $("#twotabsearchtextbox").val();
     } else if (window.location.origin.includes("ebay")) {
       var allItemsContainer = $("li.s-item");
+      shopingItemsList.siteDetails.siteName = "Ebay";
+      shopingItemsList.siteDetails.searchText = $("#gh-ac").val();
     }
 
     if (allItemsContainer.length > 0) {
@@ -48,7 +58,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
           itemPrice: "",
           deliveryDate: "",
           itemLink: "",
-          itemSearchedFor: "",
         };
 
         if (window.location.origin.includes("amazon")) {
@@ -62,7 +71,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         } else if (window.location.origin.includes("ebay")) {
           var itemNameClass = ".s-item__title span",
             itemPriceClass = ".s-item__price",
-            itemImageClass = ".s-item__image-img",
+            itemImageClass = ".s-item__image-wrapper img",
             itemDeliveryDateClass = ".a-color-base.a-text-bold",
             itemLinkClass = ".s-item__link",
             itemRatting = "x-star-rating > .clipped";
@@ -78,7 +87,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
         itemDLinkClassContainer = $(currentItemsContainer).find(itemLinkClass);
 
-        itemDetails.itemSearchedFor = $("#twotabsearchtextbox").val();
+        // itemDetails.itemSearchedFor = $("#twotabsearchtextbox").val();
 
         if (itemNameContainer.length > 0) {
           itemDetails.itemName = $(itemNameContainer).text();
@@ -100,11 +109,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
           itemDetails.itemLink = $(itemDLinkClassContainer)[0].href;
         }
 
-        shopingItemsList.push(itemDetails);
+        shopingItemsList.results.push(itemDetails);
       }
     }
 
-    if (shopingItemsList.length > 0) {
+    if ( shopingItemsList.results.length > 0) {
       sendResponse({ shopingItemsList });
     }
   }
